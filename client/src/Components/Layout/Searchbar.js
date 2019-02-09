@@ -16,7 +16,7 @@ class SearchBar extends Component {
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleFormSubmit(value) {
@@ -25,24 +25,29 @@ class SearchBar extends Component {
       console.log(polished);
       this.setState({
         cardData: polished,
-        renderStockCard: true,
         searchTerm: ""
       });
     });
   }
 
-  // handleChange(e) {
-  //   this.setState({searchTerm: e.target.value});
-  // }
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
 
   render() {
     return (
-      <div style={{ marginRight: "65%", marginLeft: "2.5%" }}>
-        <Search
-          placeholder="input search text"
-          onSearch={value => this.handleFormSubmit(value)}
-        />
-      </div>
+      // <div style={{ marginRight: "65%", marginLeft: "2.5%" }}>
+      //   <Search
+      //     placeholder="input search text"
+      //     onSearch={value => this.handleFormSubmit(value)}
+      //   />
+      //   {/* <StockCard /> */}
+      // </div>
+
+      <form>
+        <label>Symbol:</label>
+        <input type="text" value={this.state.searchTerm} onChange={this.handleChange} />
+      </form>
     );
   }
 }

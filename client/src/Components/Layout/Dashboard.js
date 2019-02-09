@@ -22,7 +22,6 @@ class Dashboard extends Component {
           <h3>Hello, {this.props.auth.account.name}</h3>
           <h6>${fc(this.props.auth.account.balance)}</h6>
         </div>
-
         :
           <div></div>
         }
