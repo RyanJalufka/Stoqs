@@ -5,7 +5,8 @@ import {
   GET_ERRORS,
   SET_CURRENT_USER,
   USER_LOADING,
-  SET_USER_ACCOUNT
+  SET_USER_ACCOUNT,
+  SET_USER_STOCKLIST
 } from './types';
 
 // Register User
@@ -30,7 +31,6 @@ export const loginUser = userData => dispatch => {
       localStorage.setItem('jwtToken', token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
-      console.log('decoded: ', decoded.id)
       dispatch(setCurrentUser(decoded));
       dispatch(setUserAccount(decoded.id));
     })
@@ -50,7 +50,7 @@ export const setCurrentUser = decoded => {
   };
 };
 
-//
+// get account balance and stockList for user
 export const setUserAccount = id => {
   return (dispatch) => {
     return axios.get('/users', {
@@ -61,10 +61,24 @@ export const setUserAccount = id => {
     .then(data => {
       let index = data.findIndex(x => x._id === id)
 
-       console.log("RESPONSE IS: ", data[index]);
-       dispatch({ type: SET_USER_ACCOUNT, payload: data[index]});
+      console.log("RESPONSE IS: ", data[index]);
+      dispatch(setUserStocklist(data[index]._id));
+      dispatch({ type: SET_USER_ACCOUNT, payload: data[index]});
     })
   }
+}
+
+  export const setUserStocklist = id => dispatch => {
+    console.log("setUserStockList action called!", id);
+      return axios.post('/stocks/stocklist', {
+        owner: id
+      })
+      .then(response => response.data)
+      .then(data => {
+        console.log('data from setUserStockList action: ', data);
+        dispatch({ type: SET_USER_STOCKLIST, payload: data });
+      })
+
 }
 
 

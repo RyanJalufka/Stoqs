@@ -15,6 +15,11 @@ router.get('/:id', StockController.show);
 /*
  * POST
  */
+router.post('/stocklist', StockController.stocklist);
+
+/*
+ * POST
+ */
 router.post('/', StockController.create);
 
 /*

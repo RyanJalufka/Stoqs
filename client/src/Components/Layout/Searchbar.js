@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Input } from "antd";
+import styled from 'styled-components'
 import StockCard from "../StockCard";
 import API_KEY from "../../Utils/keys";
 const alpha = require("alphavantage")({ key: API_KEY });
@@ -27,7 +28,7 @@ class SearchBar extends Component {
     alpha.data.quote(value).then(data => {
       const polished = alpha.util.polish(data);
       console.log(polished);
-      this.setState({ cardData: polished });
+      this.setState({ cardData: polished, value: "" });
     });
     event.preventDefault();
   }
@@ -37,19 +38,24 @@ class SearchBar extends Component {
   }
 
   render() {
+
+    const Component = styled.div`margin-right: 70%;`
+
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <Component>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Name:
+              <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </Component>
       </div>
     );
   }

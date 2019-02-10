@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
-import fc from 'format-currency';
-import { setUserAccount } from '../../Actions/authAction';
+import fc from "format-currency";
+import _ from "lodash";
+import { setUserAccount } from "../../Actions/authAction";
 import Searchbar from "./Searchbar";
 
 class Dashboard extends Component {
@@ -14,27 +16,57 @@ class Dashboard extends Component {
     }
   }
 
+  handleClick = () => {
+
+  }
+
+  renderStockList(array) {
+    return _.map(array, c => {
+      return (
+        <Link to="/stock">
+        <li key={c._id} >
+            <h4>
+              <i>{c.symbol}</i>
+            </h4>
+            <br />
+          <p>price: ${fc(c.price)}</p>
+          <p>shares: {c.shares}</p>
+          <p>cost: ${fc(c.cost)}</p>
+        </li>
+        </Link>
+      );
+    });
+  }
+
   render() {
     return (
-      <div style={{ marginLeft: "2.5%"}}>
-        {this.props.auth.isAuthenticated ?
-        <div>
-          <h3>Hello, {this.props.auth.account.name}</h3>
-          <h6>${fc(this.props.auth.account.balance)}</h6>
-        </div>
-        :
-          <div></div>
-        }
+      <div style={{ marginLeft: "2.5%" }}>
+        {this.props.auth.isAuthenticated ? (
+          <div>
+            <h3>Hello, {this.props.account.name}</h3>
+            <h6>${fc(this.props.account.balance)}</h6>
+          </div>
+        ) : (
+          <div />
+        )}
         <Searchbar />
+        <div>
+        {this.renderStockList(this.props.stockList)}
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    auth: state.auth
-  }
-}
+    auth: state.auth,
+    account: state.account,
+    stockList: state.account.stockList
+  };
+};
 
-export default connect(mapStateToProps, { setUserAccount })(Dashboard);
+export default connect(
+  mapStateToProps,
+  { setUserAccount }
+)(Dashboard);
