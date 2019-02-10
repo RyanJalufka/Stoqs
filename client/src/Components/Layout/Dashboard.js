@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import fc from 'format-currency';
 import { setUserAccount } from '../../Actions/authAction';
 import Searchbar from "./Searchbar";
+import OwnedStocks from '../Dashboard/OwnedStocks';
 
 class Dashboard extends Component {
   // should call all other dashboard components from here... similar to App.js
@@ -19,13 +20,14 @@ class Dashboard extends Component {
       <div style={{ marginLeft: "2.5%"}}>
         {this.props.auth.isAuthenticated ?
         <div>
-          <h3>Hello, {this.props.auth.account.name}</h3>
-          <h6>${fc(this.props.auth.account.balance)}</h6>
+          <h3>${fc(this.props.auth.account.balance)}</h3>
+          <h10>+ 1.09</h10><br/>
+          <h10>- 0.95</h10>
         </div>
         :
           <div></div>
         }
-        <Searchbar />
+        <OwnedStocks />
       </div>
     );
   }

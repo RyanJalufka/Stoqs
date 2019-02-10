@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Grid from '@material-ui/core/Grid';
+import Searchbar from "./Searchbar";
 
 class Navbar extends Component {
   handleLogout = () => {
@@ -56,14 +58,31 @@ class Navbar extends Component {
         {this.props.auth.isAuthenticated ? (
           <AppBar position="static">
             <Toolbar style={{ background: "black" }}>
-              <Link to="/dashboard">
-                <Typography variant="h5" color="inherit">
-                  Stoq Tracker
-                </Typography>
-              </Link>
-              <Button color="inherit" onClick={() => this.handleLogout()}>
-                Logout
-              </Button>
+              <Grid container spacing={8}>
+                
+                  <Grid item xs={3}>
+                      <Link to="/dashboard">
+                        <Typography variant="h5" color="inherit">
+                          STOQtracker
+                        </Typography>
+                      </Link>
+                  </Grid>
+
+                  <Grid item xs={3}>
+                      <Searchbar />
+                  </Grid>
+
+                  <Grid item xs={3}>
+                      <h10>Hello, {this.props.auth.account.name}</h10>
+                  </Grid>
+
+                  <Grid item xs={3}>
+                      <Button color="inherit" onClick={() => this.handleLogout()}>
+                        Logout
+                      </Button>
+                  </Grid>
+
+              </Grid>
             </Toolbar>
           </AppBar>
         ) : (
