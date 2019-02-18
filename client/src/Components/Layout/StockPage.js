@@ -4,13 +4,28 @@ import { Link } from "react-router-dom";
 
 class StockPage extends Component {
 
+  componentDidMount() {
+    // If logged in and user navigates to Login page, should redirect them to dashboard
+    if (!this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
+
   render() {
     return(
       <div>
-        stock data from store
+        <h3>{this.props.currentStock.companyName}</h3>
       </div>
     );
   }
 }
 
-export default (StockPage);
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    account: state.account,
+    currentStock: state.currentStock
+  };
+};
+
+export default connect(mapStateToProps)(StockPage);

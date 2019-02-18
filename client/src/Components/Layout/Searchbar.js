@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-import { Input } from "antd";
-import styled from 'styled-components'
-import StockCard from "../StockCard";
 import API_KEY from "../../Utils/keys";
+import "../styles/searchbar.css";
 const alpha = require("alphavantage")({ key: API_KEY });
 
-const Search = Input.Search;
-
-//maybe just put this stuff in global state?? idk fuck
 
 class SearchBar extends Component {
   constructor(props) {
@@ -39,24 +34,15 @@ class SearchBar extends Component {
 
   render() {
 
-    const Component = styled.div`margin-right: 70%;`
-
     return (
-      <div>
-        <Component>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Name:
-              <input
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange}
-              />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
-        </Component>
-      </div>
+        <form onSubmit={this.handleSubmit} >
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+          <input type="submit" value="Submit" />
+        </form>
     );
   }
 }

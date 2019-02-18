@@ -20,11 +20,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
-    // case SET_USER_ACCOUNT:
-    //   return {
-    //     ...state,
-    //     account: action.payload
-    //   }
+
     default:
       return state;
   }
