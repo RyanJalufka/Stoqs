@@ -1,4 +1,4 @@
-import {SET_USER_ACCOUNT, SET_USER_STOCKLIST, SET_CURRENT_PRICES, LOGOUT_USER} from '../Actions/types';
+import {SET_USER_ACCOUNT, SET_USER_STOCKLIST, SET_CURRENT_PRICES, LOGOUT_USER, SUBTRACT_FUNDS} from '../Actions/types';
 
 const initialState = {
   balance: 0,
@@ -29,6 +29,12 @@ export default (state = initialState, action) => {
         }
     case LOGOUT_USER: 
         return initialState;
+    case SUBTRACT_FUNDS: 
+        let balance = state.balance;
+        return {
+          ...state,
+          balance: balance - action.payload
+        }
     default:
       return state;
   }

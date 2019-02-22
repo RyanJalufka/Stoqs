@@ -40,8 +40,8 @@ class StockPage extends Component {
       owner: this.props.auth.user.id
     }
 
-    this.props.buyNewStock(purchasedStock);
-    
+    this.props.buyNewStock(purchasedStock, this.props.account.balance);
+
     this.props.history.push("/dashboard");
 
     event.preventDefault();

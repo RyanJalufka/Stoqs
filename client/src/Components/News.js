@@ -22,7 +22,8 @@ class News extends Component {
                 flex={false}
                 pad="medium">
                 <b>{item.headline}</b>
-                <a href={item.url} target="_blank" style={{color: 'black'}}>{item.source}</a>
+                <a href={item.url} target="_blank" style={{color: 'black'}}>- {item.source}</a>
+                <br />
               </Box>
             )}
           </InfiniteScroll>
