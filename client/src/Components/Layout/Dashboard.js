@@ -3,20 +3,20 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import fc from "format-currency";
 import _ from "lodash";
-import { setUserAccount } from "../../Actions/authAction";
+import isEmpty from "is-empty";
 import { getNews } from "../../Actions/newsAction";
 import { setCurrentStock } from "../../Actions/stockAction";
+import { setCurrentPrices } from "../../Actions/authAction"
 import Searchbar from "./Searchbar";
 import News from "../News";
+import ProfitDisplay from '../ProfitDisplay';
 import { Card, CardHeader, CardBody, CardFooter } from "react-simple-card";
-import { Button } from '@material-ui/core';
+import { Button } from "@material-ui/core";
 import "../styles/dashboard.css";
 
 class Dashboard extends Component {
-  // should call all other dashboard components from here... similar to App.js
 
   componentDidMount() {
-    // If logged in and user navigates to Login page, should redirect them to dashboard
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
@@ -26,17 +26,36 @@ class Dashboard extends Component {
     return _.map(array, c => {
       return (
         <div className="stock-list-card">
-
           <Card>
-            <CardHeader><b>{c.symbol}</b></CardHeader>
+            <CardHeader>
+              <b>{c.symbol} </b> - $
+              {fc(this.props.currentPrices[`${c.symbol}`].quote.latestPrice)}
+            </CardHeader>
             <CardBody>
               <li>${fc(c.price)}</li>
               <li>{c.shares} shares</li>
-              <li>${fc(c.cost)}</li>
+              <li>cost: ${fc(c.cost)}</li>
+              <li>
+                value: $
+                {fc(
+                  this.props.currentPrices[`${c.symbol}`].quote.latestPrice *
+                    c.shares
+                )}
+              </li>
+              <li>
+                profit: $
+                {fc(
+                  this.props.currentPrices[`${c.symbol}`].quote.latestPrice *
+                    c.shares -
+                    c.cost
+                )}
+              </li>
             </CardBody>
             <CardFooter>
               <Link to="/stock">
-                <Button onClick={() => this.props.setCurrentStock(c.symbol)}>Trade {c.symbol}</Button>
+                <Button onClick={() => this.props.setCurrentStock(c.symbol)}>
+                  Trade {c.symbol}
+                </Button>
               </Link>
             </CardFooter>
           </Card>
@@ -53,18 +72,22 @@ class Dashboard extends Component {
             <h3>
               <b>${fc(this.props.account.balance)}</b>
             </h3>
+            <ProfitDisplay />
             <br />
+            <Searchbar />
             <h3>Stocks</h3>
-            {this.renderStockList(this.props.stockList)}
+            {!isEmpty(this.props.currentPrices) &&
+              this.renderStockList(this.props.stockList)}
           </div>
-        ) : (
-          <div />
-        )}
-        {/* <Searchbar /> */}
+
+        ) : (<div />)}
+
         <div className="news-container">
+        {isEmpty(this.props.news) && 
+          this.props.getNews(this.props.stockList)
+        }
           <News />
         </div>
-        {this.props.getNews(this.props.stockList)}
       </div>
     );
   }
@@ -74,11 +97,13 @@ const mapStateToProps = state => {
   return {
     auth: state.auth,
     account: state.account,
-    stockList: state.account.stockList
+    stockList: state.account.stockList,
+    currentPrices: state.account.currentPrices,
+    news: state.news
   };
 };
 
 export default connect(
   mapStateToProps,
-  { setUserAccount, getNews, setCurrentStock }
+  { setCurrentStock, getNews, setCurrentPrices }
 )(Dashboard);

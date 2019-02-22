@@ -1,8 +1,9 @@
-import {SET_USER_ACCOUNT, SET_USER_STOCKLIST} from '../Actions/types';
+import {SET_USER_ACCOUNT, SET_USER_STOCKLIST, SET_CURRENT_PRICES, LOGOUT_USER} from '../Actions/types';
 
 const initialState = {
   balance: 0,
   stockList: [],
+  currentPrices: [],
   name: '',
   email:''
 }
@@ -17,11 +18,17 @@ export default (state = initialState, action) => {
         email: action.payload.email
       }
     case SET_USER_STOCKLIST:
-    console.log('inside user stocklist reducer');
       return {
         ...state,
         stockList: action.payload
       }
+    case SET_CURRENT_PRICES:
+        return {
+          ...state,
+          currentPrices: action.payload
+        }
+    case LOGOUT_USER: 
+        return initialState;
     default:
       return state;
   }
