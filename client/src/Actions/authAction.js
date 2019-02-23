@@ -1,6 +1,7 @@
 import axios from "axios";
 import setAuthToken from "../Utils/setAuthToken";
 import jwt_decode from "jwt-decode";
+import { getNews } from "./newsAction";
 import {
   GET_ERRORS,
   SET_CURRENT_USER,
@@ -82,7 +83,7 @@ export const setUserStocklist = id => dispatch => {
         symbols.push(data[i].symbol);
       }
       dispatch({ type: SET_USER_STOCKLIST, payload: data });
-
+      dispatch(getNews(symbols));
       dispatch(setCurrentPrices(symbols));
       setInterval(function() {
         dispatch(setCurrentPrices(symbols));
@@ -91,15 +92,19 @@ export const setUserStocklist = id => dispatch => {
 };
 
 export const setCurrentPrices = symbols => dispatch => {
-  let stocks = symbols.toString();
-  return axios
-    .post(`/api/batch`, {
-      stocks: stocks
-    })
-    .then(response => response.data)
-    .then(data => {
-      dispatch({ type: SET_CURRENT_PRICES, payload: data });
-    });
+  if (symbols.length < 1) {
+    dispatch({ type: SET_CURRENT_PRICES, payload: {}});
+  } else {
+    let stocks = symbols.toString();
+    return axios
+      .post("/api/batch", {
+        stocks: stocks
+      })
+      .then(response => response.data)
+      .then(data => {
+        dispatch({ type: SET_CURRENT_PRICES, payload: data });
+      });
+  }
 };
 
 export const setUserLoading = () => {

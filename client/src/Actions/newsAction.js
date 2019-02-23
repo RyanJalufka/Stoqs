@@ -2,10 +2,17 @@ import { GET_NEWS } from './types';
 import axios from 'axios';
 
 export const getNews = (stockList, dispatch) => {
-    const data = stockList.map(value => value.symbol);
-    let symbols = data.toString();
+  console.log('stockList: ', stockList)
+    // const data = stockList.map(value => value);
+
+    let symbols;
+    if(stockList.length < 1) { 
+      symbols = ['msft', 'aapl'] 
+    } else {
+      symbols = stockList.toString();
+    }
     
-    if(symbols === '') { symbols = "fb, aapl, msft" }
+    console.log('SYMBOLS: ', symbols)
 
     return(dispatch) => {
       axios.post('/news', {

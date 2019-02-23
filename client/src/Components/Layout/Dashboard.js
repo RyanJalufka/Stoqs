@@ -83,9 +83,6 @@ class Dashboard extends Component {
         ) : (<div />)}
 
         <div className="news-container">
-        {isEmpty(this.props.news) && 
-          this.props.getNews(this.props.stockList)
-        }
           <News />
         </div>
       </div>

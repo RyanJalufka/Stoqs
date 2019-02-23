@@ -48,7 +48,7 @@ class ProfitDisplay extends Component {
   let profit = totalValue-totalCost;
   let style = '';
   let positive = '+';
-  if(profit > 0) { style = 'green' } else { style = 'red'; positive='-' };
+  if(profit >= 0) { style = 'green' } else { style = 'red'; positive='-' };
   this.setState({ profit: profit, style: style });
 
   }

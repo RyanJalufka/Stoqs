@@ -6,15 +6,7 @@ import _ from "lodash";
 
 class News extends Component {
   renderNewsList(array) {
-    // return _.map(array, c => {
        return (
-        // <li key={c.url}>
-        //     <h6>
-        //       <i>{c.headline}</i>
-        //     </h6>
-        //   <p>{(c.source)}</p>
-        // </li>
-
         <Box height="medium" overflow="auto" elevation="medium">
           <InfiniteScroll items={array}>
             {item => (
@@ -29,7 +21,6 @@ class News extends Component {
           </InfiniteScroll>
         </Box>
        );
-    // });
   }
 
   render() {
