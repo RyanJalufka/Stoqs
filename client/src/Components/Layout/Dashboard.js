@@ -11,7 +11,7 @@ import Searchbar from "./Searchbar";
 import News from "../News";
 import ProfitDisplay from '../ProfitDisplay';
 import { Card, CardHeader, CardBody, CardFooter } from "react-simple-card";
-import { Button } from "@material-ui/core";
+import { Button } from "react-materialize";
 import "../styles/dashboard.css";
 
 class Dashboard extends Component {

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import { Button } from "react-materialize";
 import fc from 'format-currency';
+import _ from 'lodash';
  import { buyNewStock } from "../../Actions/accountAction";
 import { setUserStocklist } from "../../Actions/authAction";
 
@@ -16,21 +18,17 @@ class StockPage extends Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   componentDidMount = () => {
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
-  }
+  } 
+
 
   handleSubmit = (event) => {
-    console.log(
-      "STOCK ORDER: \n", this.props.currentStock.symbol, this.state.value,
-      this.props.currentStock.latestPrice,
-      (this.state.value * this.props.currentStock.latestPrice),
-      this.props.auth.user.id
-    );
 
     const purchasedStock = {
       symbol: this.props.currentStock.symbol,
@@ -40,9 +38,24 @@ class StockPage extends Component {
       owner: this.props.auth.user.id
     }
 
-    this.props.buyNewStock(purchasedStock, this.props.account.balance);
+    let owned = false;
+    let ownedStockId;
 
-    this.props.history.push("/dashboard");
+    for(let i = 0; i < this.props.stockList.length; i++) {
+      if(this.props.currentStock.symbol === this.props.stockList[i].symbol)
+      {
+        owned = true;
+        ownedStockId = this.props.stockList[i]._id
+        console.log('THERE IS A MATCH: ', ownedStockId);
+      } 
+    }
+
+      if(owned === false) {
+        this.props.buyNewStock(purchasedStock, this.props.account.balance);
+        this.props.history.push("/dashboard");
+      } else {
+        console.log('updating existing stock...')
+      }
 
     event.preventDefault();
   }
@@ -59,7 +72,7 @@ class StockPage extends Component {
         <div>
           <form onSubmit={this.handleSubmit}>
             <input type="text" value={this.state.value} onChange={this.handleChange} />
-            <input type="submit" value="Submit" />
+            <Button type="submit" value="Submit">Buy</Button>
           </form>
         </div>
       </div>

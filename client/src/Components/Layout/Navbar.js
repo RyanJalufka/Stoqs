@@ -36,7 +36,7 @@ class Navbar extends Component {
         ) : (
           <div className="navbar-landing">
             <h1>
-              <b>Stoq Tracker</b>
+              <b>Stock Tracker</b>
             </h1>
             <br />
           </div>
