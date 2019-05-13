@@ -12,6 +12,8 @@ import {
   SET_CURRENT_PRICES
 } from "./types";
 
+const socket = require('socket.io-client')('https://ws-api.iextrading.com/1.0/tops')
+
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
@@ -85,6 +87,19 @@ export const setUserStocklist = id => dispatch => {
       dispatch({ type: SET_USER_STOCKLIST, payload: data });
       dispatch(getNews(symbols));
       dispatch(setCurrentPrices(symbols));
+      console.log(symbols.join(','));
+      // instead of setInterval set the websocket connection here?
+      // then figure out where to listen/emit updates
+      // Listen to the channel's messages
+      
+
+      // Connect to the channel
+       socket.on('connect', () => {
+
+      // Subscribe to topics (i.e. appl,fb,aig+)
+      socket.emit('subscribe', symbols.join(','))
+      socket.on('message', message => console.log('IEX SOCKET:', message))
+       })
       setInterval(function() {
         dispatch(setCurrentPrices(symbols));
       }, 6000);

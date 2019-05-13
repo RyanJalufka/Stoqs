@@ -35,6 +35,8 @@ class ProfitDisplay extends Component {
       })
       
       totalValue += currentValue * shares[0].shares;
+
+      // add an action to save the profit to store. 
       
   });
 
