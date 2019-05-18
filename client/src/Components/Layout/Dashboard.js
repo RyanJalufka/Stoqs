@@ -29,7 +29,9 @@ class Dashboard extends Component {
           <Card>
             <CardHeader>
               <b>{c.symbol} </b> - $
-              {fc(this.props.currentPrices[`${c.symbol}`].quote.latestPrice)}
+              {fc(this.props.currentPrices[`${c.symbol}`].quote.latestPrice)} 
+              {/* ${(this.props.currentPrices[`${c.symbol}`].quote.change)} 
+              ({this.props.currentPrices[`${c.symbol}`].quote.changePercent}%) */}
             </CardHeader>
             <CardBody>
               <li>${fc(c.price)}</li>
