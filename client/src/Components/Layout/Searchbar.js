@@ -1,8 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setCurrentStock } from "../../Actions/stockAction";
+import { Redirect, withRouter } from "react-router-dom";
+import { Autocomplete, Button, Row } from "react-materialize";
 import API_KEY from "../../Utils/keys";
+//import symbols from "../../Utils/symbols.json";
 import "../styles/searchbar.css";
 const alpha = require("alphavantage")({ key: API_KEY });
-
 
 class SearchBar extends Component {
   constructor(props) {
@@ -19,13 +23,10 @@ class SearchBar extends Component {
   }
 
   handleSubmit(event) {
-    let value = this.state.value;
-    alpha.data.quote(value).then(data => {
-      const polished = alpha.util.polish(data);
-      console.log(polished);
-      this.setState({ cardData: polished, value: "" });
-    });
     event.preventDefault();
+    let value = this.state.value;
+    this.props.setCurrentStock(value);
+    this.props.history.push("/stock");
   }
 
   handleChange(event) {
@@ -33,18 +34,30 @@ class SearchBar extends Component {
   }
 
   render() {
-
     return (
-        <form onSubmit={this.handleSubmit} >
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          <input type="submit" value="Submit" />
-        </form>
+      <form onSubmit={this.handleSubmit} style={{marginRight: "50%"}}>
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+        <Button type="submit" value="Submit">Search</Button>
+      </form>
+
+      // <div>
+      //   <Row>
+      //   <Autocomplete title="stock" data={ symbols } limit="5"/>
+      //   </Row>
+      //   <Button waves='light'>button</Button>
+      // </div>
+
     );
   }
 }
 
-export default SearchBar;
+export default withRouter(
+  connect(
+    null,
+    { setCurrentStock }
+  )(SearchBar)
+);

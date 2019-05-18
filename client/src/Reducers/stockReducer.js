@@ -1,4 +1,4 @@
-import { SET_CURRENT_STOCK } from '../Actions/types';
+import { SET_CURRENT_STOCK, LOGOUT_USER } from '../Actions/types';
 
 const initialState = {}
 
@@ -7,6 +7,8 @@ export default (state = initialState, action) => {
     case SET_CURRENT_STOCK:
       let newState = action.payload;
       return newState;
+    case LOGOUT_USER:
+      return initialState;
     default:
       return state;
   }

@@ -3,8 +3,14 @@ var router = express.Router();
 var apiController = require('../controllers/apiController.js');
 
 /*
- * GET
+ * POST
  */
 router.post('/quote', apiController.quote);
+
+/*
+ * POST
+ */
+router.post('/batch', apiController.batch);
+
 
 module.exports = router;

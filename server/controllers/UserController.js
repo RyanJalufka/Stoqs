@@ -93,6 +93,8 @@ module.exports = {
         });
       }
 
+      console.log("NEW BALANCE: ", req.body.balance);
+
       User.email = req.body.email ? req.body.email : User.email;
       User.password = req.body.password ? req.body.password : User.password;
       User.balance = req.body.balance ? req.body.balance : User.balance;
