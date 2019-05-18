@@ -26,19 +26,33 @@ module.exports = {
    */
   show: function(req, res) {
     var id = req.params.id;
-    StockModel.findOne({ _id: id }, function(err, Stock) {
+    console.log("id is: ", id);
+    StockModel.find({ owner: id }, function(err, Stocks) {
       if (err) {
         return res.status(500).json({
-          message: "Error when getting Stock.",
+          message: "Error when getting Stock. show",
           error: err
         });
       }
-      if (!Stock) {
+      if (!Stocks) {
         return res.status(404).json({
           message: "No such Stock"
         });
       }
-      return res.json(Stock);
+      return res.json(Stocks);
+    });
+  },
+
+  /**
+   * StockController.stockList()
+   */
+  stocklist: function(req, res) {
+    const owner = req.body.owner;
+    console.log('owner id: ', owner);
+    var query = StockModel.find({ owner: owner }, null, { skip: 0 });
+    query.exec(function(err, docs) {
+      console.log(docs);
+      res.json(docs);
     });
   },
 

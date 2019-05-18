@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
+import accountReducer from './accountReducer';
+import newsReducer from './newsReducer'
+import stockReducer from './stockReducer'
 
 export default combineReducers({
   auth: authReducer,
-  errors: errorReducer
+  account: accountReducer,
+  errors: errorReducer,
+  news: newsReducer,
+  currentStock: stockReducer
 });

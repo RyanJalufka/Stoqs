@@ -2,3 +2,13 @@ export const GET_ERRORS = "GET_ERRORS";
 export const USER_LOADING = "USER_LOADING";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const SET_USER_ACCOUNT = "SET_USER_ACCOUNT";
+export const LOGOUT_USER = "LOGOUT_USER";
+
+export const SUBTRACT_FUNDS = "SUBTRACT_FUNDS"
+export const ADD_FUNDS = "SUBTRACT_FUNDS"
+export const SET_USER_STOCKLIST = "SET_USER_STOCKLIST"
+
+export const GET_NEWS = "GET_NEWS";
+export const SET_CURRENT_STOCK = "SET_CURRENT_STOCK";
+
+export const SET_CURRENT_PRICES= "SET_CURRENT_PRICES";

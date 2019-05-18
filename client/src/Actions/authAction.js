@@ -1,45 +1,50 @@
-import axios from 'axios';
-import setAuthToken from '../Utils/setAuthToken';
-import jwt_decode from 'jwt-decode';
+import axios from "axios";
+import setAuthToken from "../Utils/setAuthToken";
+import jwt_decode from "jwt-decode";
+import { getNews } from "./newsAction";
 import {
   GET_ERRORS,
   SET_CURRENT_USER,
   USER_LOADING,
-  SET_USER_ACCOUNT
-} from './types';
+  LOGOUT_USER,
+  SET_USER_ACCOUNT,
+  SET_USER_STOCKLIST,
+  SET_CURRENT_PRICES
+} from "./types";
+
+const socket = require('socket.io-client')('https://ws-api.iextrading.com/1.0/tops')
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-  .post('/users/register', userData)
-  .then(res => history.push('/login')) // redirects to login on valid register
-  .catch(err => 
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    })
-  );
+    .post("/users/register", userData)
+    .then(res => history.push("/login")) // redirects to login on valid register
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
 
 // Login and get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post('/users/login', userData)
+    .post("/users/login", userData)
     .then(res => {
       const { token } = res.data;
-      localStorage.setItem('jwtToken', token);
+      localStorage.setItem("jwtToken", token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
-      console.log('decoded: ', decoded.id)
       dispatch(setCurrentUser(decoded));
       dispatch(setUserAccount(decoded.id));
     })
     .catch(err =>
-    dispatch({
-      type: GET_ERRORS,
-      payload: 'error'
-    })
-  );
+      dispatch({
+        type: GET_ERRORS,
+        payload: "error"
+      })
+    );
 };
 
 // Set logged in user
@@ -50,25 +55,73 @@ export const setCurrentUser = decoded => {
   };
 };
 
-//
+// get account balance and stockList for user
 export const setUserAccount = id => {
-  return (dispatch) => {
-    return axios.get('/users', {
-      params: { id: id}
-    })
+  return dispatch => {
+    return axios
+      .get("/users", {
+        params: { id: id }
+      })
 
+      .then(response => response.data)
+      .then(data => {
+        let index = data.findIndex(x => x._id === id);
+
+        dispatch(setUserStocklist(data[index]._id));
+        dispatch({ type: SET_USER_ACCOUNT, payload: data[index] });
+      });
+  };
+};
+
+export const setUserStocklist = id => dispatch => {
+  return axios
+    .post("/stocks/stocklist", {
+      owner: id
+    })
     .then(response => response.data)
     .then(data => {
-      let index = data.findIndex(x => x._id === id)
+      let symbols = [];
+      for (let i = 0; i < data.length; i++) {
+        symbols.push(data[i].symbol);
+      }
+      dispatch({ type: SET_USER_STOCKLIST, payload: data });
+      dispatch(getNews(symbols));
+      dispatch(setCurrentPrices(symbols));
+      console.log(symbols.join(','));
+      // instead of setInterval set the websocket connection here?
+      // then figure out where to listen/emit updates
+      // Listen to the channel's messages
+      
 
-       console.log("RESPONSE IS: ", data[index]);
-       dispatch({ type: SET_USER_ACCOUNT, payload: data[index]});
-    })
+      // Connect to the channel
+       socket.on('connect', () => {
+
+      // Subscribe to topics (i.e. appl,fb,aig+)
+      socket.emit('subscribe', symbols.join(','))
+      socket.on('message', message => console.log('IEX SOCKET:', message))
+       })
+      setInterval(function() {
+        dispatch(setCurrentPrices(symbols));
+      }, 6000);
+    });
+};
+
+export const setCurrentPrices = symbols => dispatch => {
+  if (symbols.length < 1) {
+    dispatch({ type: SET_CURRENT_PRICES, payload: {}});
+  } else {
+    let stocks = symbols.toString();
+    return axios
+      .post("/api/batch", {
+        stocks: stocks
+      })
+      .then(response => response.data)
+      .then(data => {
+        dispatch({ type: SET_CURRENT_PRICES, payload: data });
+      });
   }
-}
+};
 
-
-// User loading
 export const setUserLoading = () => {
   return {
     type: USER_LOADING
@@ -77,10 +130,9 @@ export const setUserLoading = () => {
 
 // Log user out
 export const logoutUser = () => dispatch => {
-  // Remove token from local storage
   localStorage.removeItem("jwtToken");
-  // Remove auth header for future requests
   setAuthToken(false);
   // Set current user to empty object {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+  dispatch({ type: LOGOUT_USER });
 };

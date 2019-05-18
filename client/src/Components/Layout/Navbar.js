@@ -2,15 +2,19 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../Actions/authAction";
-import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+<<<<<<< HEAD
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Grid from '@material-ui/core/Grid';
 import Searchbar from "./Searchbar";
+=======
+import { FaChartLine } from 'react-icons/fa'
+import Clock from '../Clock';
+import "../styles/navbar.css";
+>>>>>>> ac4c5dfd11176afffefd809f58f15ac3d61f2413
 
 class Navbar extends Component {
   handleLogout = () => {
@@ -20,42 +24,12 @@ class Navbar extends Component {
 
   // handle the render of the logout button when user is logged in!!!
 
-  render() {
-    const styles = {
-      menuButton: {}
-    };
 
+  render() {
     return (
-      // <div className="navbar-fixed">
-      //   <button onClick={() => this.handleLogout()}>Logout</button>
-      //   <nav className="z-depth-0">
-      //     <div className="nav-wrapper white">
-      //       {this.props.auth.isAuthenticated ? (
-      // <Link
-      //   to="/dashboard"
-      //   style={{
-      //     fontFamily: "monospace"
-      //   }}
-      //   className="col s5 brand-logo center black-text"
-      // >
-      //   STOCKS
-      // </Link>
-      //       ) : (
-      //         <Link
-      //           to="/"
-      //           style={{
-      //             fontFamily: "monospace"
-      //           }}
-      //           className="col s5 brand-logo center black-text"
-      //         >
-      //           STOCKS
-      //         </Link>
-      //       )}
-      //     </div>
-      //   </nav>
-      // </div>
       <div>
         {this.props.auth.isAuthenticated ? (
+<<<<<<< HEAD
           <AppBar position="static">
             <Toolbar style={{ background: "black" }}>
               <Grid container spacing={8}>
@@ -85,10 +59,23 @@ class Navbar extends Component {
               </Grid>
             </Toolbar>
           </AppBar>
+=======
+          <div className="navbar-container">
+            <div className="logo">
+              <Link to="/dashboard">Stoq Tracker</Link>
+            </div>
+            <div className="logout">
+              <Button color="inherit" onClick={() => this.handleLogout()}>
+                Logout
+              </Button>
+            </div>
+            <Clock />
+          </div>
+>>>>>>> ac4c5dfd11176afffefd809f58f15ac3d61f2413
         ) : (
-          <div style={{ textAlign: "center" }}>
+          <div className="navbar-landing">
             <h1>
-              <b>Stoq Tracker</b>
+              <b>Stock Tracker</b>
             </h1>
             <br />
           </div>

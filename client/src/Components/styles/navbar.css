@@ -1,0 +1,32 @@
+.navbar-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: black;
+  color: white
+}
+
+.navbar-landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+}
+
+.logout {
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: #FFF;
+}
+a:hover {
+   color: rgba(255, 255, 255, 0.788)
+}
+
+
