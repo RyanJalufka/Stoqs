@@ -53,7 +53,7 @@ class Dashboard extends Component {
             </CardBody>
             <CardFooter>
               <Link to="/stock">
-                <Button onClick={() => this.props.setCurrentStock(c.symbol)}>
+                <Button onClick={() => this.props.setCurrentStock(c.symbol, c)}>
                   Trade {c.symbol}
                 </Button>
               </Link>
