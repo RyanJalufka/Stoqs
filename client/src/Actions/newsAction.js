@@ -2,7 +2,6 @@ import { GET_NEWS } from './types';
 import axios from 'axios';
 
 export const getNews = (stockList, dispatch) => {
-  console.log('stockList: ', stockList)
     // const data = stockList.map(value => value);
 
     let symbols;
@@ -11,8 +10,6 @@ export const getNews = (stockList, dispatch) => {
     } else {
       symbols = stockList.toString();
     }
-    
-    console.log('SYMBOLS: ', symbols)
 
     return(dispatch) => {
       axios.post('/news', {

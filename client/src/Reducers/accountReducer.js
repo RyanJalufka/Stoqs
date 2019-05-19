@@ -18,6 +18,7 @@ export default (state = initialState, action) => {
         email: action.payload.email
       }
     case SET_USER_STOCKLIST:
+
       return {
         ...state,
         stockList: action.payload

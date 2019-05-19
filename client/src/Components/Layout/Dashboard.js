@@ -16,13 +16,34 @@ import "../styles/dashboard.css";
 
 class Dashboard extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = { initialRender: true }
+
+  }
+
   componentDidMount() {
+    console.log("PROPS: ", this.props);
+    if(!this.state.intialRender) {
+      this.renderStockList(this.props.stockList);
+    }
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
   }
 
+  stockListHandler() {
+    if(this.state.initialRender) {
+      this.renderStockList(this.props.stockList)
+      this.setState({initialRender: false});
+    } else {
+      console.log('NOT INITIAL RENDER: ', this.state.initialRender);
+    }
+  }
+
   renderStockList(array) {
+    console.log('STOCKLIST RENDERED');
     return _.map(array, c => {
       return (
         <div className="stock-list-card">
@@ -79,7 +100,7 @@ class Dashboard extends Component {
             <Searchbar />
             <h3>Stocks</h3>
             {!isEmpty(this.props.currentPrices) &&
-              this.renderStockList(this.props.stockList)}
+              this.stockListHandler()}
           </div>
 
         ) : (<div />)}

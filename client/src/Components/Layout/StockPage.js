@@ -24,6 +24,7 @@ class StockPage extends Component {
   }
 
   componentDidMount = () => {
+    console.log("STOCKPAGE PROPS: ", this.props);
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
@@ -53,12 +54,8 @@ class StockPage extends Component {
     }
 
       if(owned === false) {
-
-        this.props.buyNewStock(purchasedStock, this.props.account.balance)
-        this.props.history.push("/dashboard");
-
-        // this.props.buyNewStock(purchasedStock, this.props.account.balance);
-        // this.props.history.push("/dashboard");
+        this.props.buyNewStock(purchasedStock, this.props.account.balance);
+        //this.props.history.push("/dashboard");
       } else {
         console.log('updating existing stock...')
       }
