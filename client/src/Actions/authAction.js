@@ -87,7 +87,6 @@ export const setUserStocklist = id => dispatch => {
       dispatch({ type: SET_USER_STOCKLIST, payload: data });
       dispatch(getNews(symbols));
       dispatch(setCurrentPrices(symbols));
-      console.log(symbols.join(','));
       // instead of setInterval set the websocket connection here?
       // then figure out where to listen/emit updates
       // Listen to the channel's messages

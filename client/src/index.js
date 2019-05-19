@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from "./Components/App"
 import { store, persistor } from './configureStore';
 
-store.subscribe(() => console.log("current state: ", store.getState()));
+//store.subscribe(() => console.log("current state: ", store.getState()));
 
 ReactDOM.render(
   <Provider store={store}>
