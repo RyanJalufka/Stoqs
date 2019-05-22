@@ -1,0 +1,8 @@
+#news-box {
+  margin-left: -2%;
+
+}
+
+#news-item:hover {
+  background-color: rgba(255, 255, 255, 0.158);
+}

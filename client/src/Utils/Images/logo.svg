@@ -1,0 +1,24 @@
+<svg width="463px" height="62px" viewBox="0 0 463 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <desc>StoqTracker Logo</desc>
+    <defs>
+      <style type="text/css">
+      @import url('https://fonts.googleapis.com/css?family=Roboto-Medium');
+      </style>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-6661.000000, -1502.000000)">
+            <g id="Group-5" transform="translate(6659.000000, 1491.000000)">
+                <text id="Stock-Tracker" font-family="Roboto-Medium, Roboto Medium" font-size="64" font-weight="normal" fill="#FFFFFF">
+                    <tspan x="0" y="59">Stock Tracker</tspan>
+                </text>
+                <g id="Group-2" transform="translate(404.000000, 14.000000)">
+                    <ellipse id="Oval" stroke="#FFFFFF" stroke-width="5" cx="30" cy="28" rx="28" ry="28"></ellipse>
+                    <polygon id="Triangle" fill="#FFFFFF" transform="translate(44.893536, 15.389610) rotate(34.000000) translate(-44.893536, -15.389610) " points="44.8935357 10.0984593 52.0521517 20.6807612 37.7349197 20.6807612"></polygon>
+                    <path d="M0.5,50.5 L14.5,29.5" id="Line" stroke="#FFFFFF" stroke-width="5" stroke-linecap="square"></path>
+                    <path d="M28.5,39.5 L42.5,18.5" id="Line" stroke="#FFFFFF" stroke-width="5" stroke-linecap="square"></path>
+                    <path d="M14.5,29.5 L28.5,39.5" id="Line" stroke="#FFFFFF" stroke-width="5" stroke-linecap="square"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

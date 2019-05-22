@@ -16,29 +16,10 @@ import "../styles/dashboard.css";
 
 class Dashboard extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = { initialRender: true }
-
-  }
-
   componentDidMount() {
     console.log("PROPS: ", this.props);
-    if(!this.state.intialRender) {
-      this.renderStockList(this.props.stockList);
-    }
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/");
-    }
-  }
-
-  stockListHandler() {
-    if(this.state.initialRender) {
-      this.renderStockList(this.props.stockList)
-      this.setState({initialRender: false});
-    } else {
-      console.log('NOT INITIAL RENDER: ', this.state.initialRender);
     }
   }
 
@@ -47,15 +28,36 @@ class Dashboard extends Component {
     return _.map(array, c => {
       return (
         <div className="stock-list-card">
-          <Card>
-            <CardHeader>
-              <b>{c.symbol} </b> - $
-              {fc(this.props.currentPrices[`${c.symbol}`].quote.latestPrice)} 
-              {/* ${(this.props.currentPrices[`${c.symbol}`].quote.change)} 
-              ({this.props.currentPrices[`${c.symbol}`].quote.changePercent}%) */}
+          <Card style={{ border: "none", margin: "none", paddingBottom: "5px;"}}>
+            <CardHeader 
+              style={{ backgroundColor: "#125150", color: "white", border: "none"}}>
+              <div className="header-contents">
+                <div className="symbol">
+                  <b>{c.symbol} </b>
+                </div>
+                <div className="price">
+                  ${fc(this.props.currentPrices[`${c.symbol}`].quote.latestPrice)} <br />
+                  {c.shares} shares <br />
+                  profit: $
+                {fc(
+                  this.props.currentPrices[`${c.symbol}`].quote.latestPrice *
+                    c.shares -
+                    c.cost
+                )}
+                  {/* ${(this.props.currentPrices[`${c.symbol}`].quote.change)} 
+                  ({this.props.currentPrices[`${c.symbol}`].quote.changePercent}%) */}
+                </div>
+                <div className="trade-button">
+                  <Link to="/stock">
+                    <Button onClick={() => this.props.setCurrentStock(c.symbol, c)} id="trade-button">
+                      Trade {c.symbol}
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </CardHeader>
-            <CardBody>
-              <li>${fc(c.price)}</li>
+            {/* <CardBody> */}
+              {/* <li>${fc(c.price)}</li>
               <li>{c.shares} shares</li>
               <li>cost: ${fc(c.cost)}</li>
               <li>
@@ -72,15 +74,15 @@ class Dashboard extends Component {
                     c.shares -
                     c.cost
                 )}
-              </li>
-            </CardBody>
-            <CardFooter>
+              </li> */}
+            {/* </CardBody> */}
+            {/* <CardFooter>
               <Link to="/stock">
                 <Button onClick={() => this.props.setCurrentStock(c.symbol, c)}>
                   Trade {c.symbol}
                 </Button>
               </Link>
-            </CardFooter>
+            </CardFooter> */}
           </Card>
         </div>
       );
@@ -91,16 +93,23 @@ class Dashboard extends Component {
     return (
       <div className="container">
         {this.props.auth.isAuthenticated ? (
-          <div className="account-container">
-            <h3>
-              <b>${fc(this.props.account.balance)}</b>
-            </h3>
-            <ProfitDisplay />
-            <br />
-            <Searchbar />
-            <h3>Stocks</h3>
-            {!isEmpty(this.props.currentPrices) &&
-              this.stockListHandler()}
+          <div className="left-container">
+            <p style={{color: "white"}}>{this.props.account.name}</p>
+            <div className="account-container">
+              <h3>
+                <b id="account-balance">${fc(this.props.account.balance)}</b>
+              </h3>
+                <ProfitDisplay />
+              <br />
+            </div>
+            <div className="stocks-container">
+              <div className="stocks-header">
+                <h3 style={{color: "white"}}>Stocks</h3>
+                <Searchbar />
+              </div>
+              {!isEmpty(this.props.currentPrices) &&
+                this.renderStockList(this.props.stockList)}
+            </div>
           </div>
 
         ) : (<div />)}
@@ -109,7 +118,7 @@ class Dashboard extends Component {
           <News />
         </div>
       </div>
-    );
+    )
   }
 }
 

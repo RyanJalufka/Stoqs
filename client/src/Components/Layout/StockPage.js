@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 // import { Link } from "react-router-dom";
 import { Button } from "react-materialize";
 import fc from 'format-currency';
-import _ from 'lodash';
-import isEmpty from 'is-empty';
+// import _ from 'lodash';
+// import isEmpty from 'is-empty';
  import { buyNewStock } from "../../Actions/accountAction";
 import { setUserStocklist } from "../../Actions/authAction";
+import "../styles/stockpage.css"
 
 
 class StockPage extends Component {

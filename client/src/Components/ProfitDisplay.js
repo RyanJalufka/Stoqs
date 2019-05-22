@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import fc from 'format-currency';
+import "./styles/dashboard.css";
 
 
 class ProfitDisplay extends Component {
@@ -50,7 +51,7 @@ class ProfitDisplay extends Component {
   let profit = totalValue-totalCost;
   let style = '';
   let positive = '+';
-  if(profit >= 0) { style = 'green' } else { style = 'red'; positive='-' };
+  if(profit >= 0) { style = '#3affa2' } else { style = 'red'; positive='-' };
   this.setState({ profit: profit, style: style });
 
   }
@@ -60,7 +61,7 @@ class ProfitDisplay extends Component {
     if(this.state.profit > 0) { positive = '+';}
 
     return(
-      <div style={{ color: this.state.style}}>
+      <div style={{ color: this.state.style}} id="profit-display">
         {positive}${fc(this.state.profit)}
       </div>
     );

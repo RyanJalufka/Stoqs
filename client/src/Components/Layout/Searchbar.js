@@ -35,7 +35,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={{marginRight: "50%"}}>
+      <form onSubmit={this.handleSubmit} style={{display: "inline-flex", paddingTop: "4vh"}}>
           <input
             type="text"
             value={this.state.value}

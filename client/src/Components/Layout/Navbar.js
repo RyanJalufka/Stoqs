@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../Actions/authAction";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+// import AppBar from "@material-ui/core/AppBar";
+// import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
-import { FaChartLine } from 'react-icons/fa'
+// import { FaChartLine } from 'react-icons/fa'
 import Clock from '../Clock';
 import "../styles/navbar.css";
 
@@ -20,26 +20,38 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.auth.isAuthenticated ? (
-          <div className="navbar-container">
-            <div className="logo">
-              <Link to="/dashboard">Stoq Tracker</Link>
-            </div>
-            <div className="logout">
-              <Button color="inherit" onClick={() => this.handleLogout()}>
-                Logout
-              </Button>
-            </div>
-            <Clock />
-          </div>
-        ) : (
-          <div className="navbar-landing">
-            <h1>
-              <b>Stock Tracker</b>
-            </h1>
-            <br />
-          </div>
+      // <div className="global-container">
+      //   {this.props.auth.isAuthenticated ? (
+      //     <div className="navbar-container">
+      //       <div className="logo">
+      //         <Link to="/dashboard">Stoq Tracker</Link>
+      //       </div>
+      //       <div className="logout">
+      //         <Button color="inherit" onClick={() => this.handleLogout()}>
+      //           Logout
+      //         </Button>
+      //       </div>
+      //       <Clock />
+      //     </div>
+
+        <div>
+          {this.props.auth.isAuthenticated ? (
+            <nav className="navbar">
+              <div><Link to="/dashboard">Stoq Tracker</Link></div>
+              <Clock />
+              <Button color="inherit" onClick={() => this.handleLogout()}>Logout</Button>
+            </nav>
+
+
+
+        ) : ( <div />
+          // <div className="navbar-landing">
+          //   <h1>
+          //     <b>Stock Tracker</b>
+          //   </h1>
+          //   <br />
+          // </div>
+          // REMOVED THE WHITE HEADER FROM LOGIN LANDING PAGE
         )}
       </div>
     );

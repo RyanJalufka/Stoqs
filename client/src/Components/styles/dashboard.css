@@ -1,11 +1,20 @@
+body {
+  overflow: scroll;
+  height: 100vh;
+}
+
 li {
   list-style-type: none;
+}
+
+div.container.valign-wrapper {
+  height: 100vh;
 }
 
 .stock-list-card {
   position: relative;
   display: inline-block;
-  width: 75%;
+  width: 100%;
 }
 
 .dropdown-content {
@@ -17,22 +26,74 @@ li {
 
 
 .container {
+  background: rgb(83,171,140);
+  background: linear-gradient(180deg, rgba(83,171,140,1) 0%, rgba(80,223,238,1) 100%);
   display: flex;
   width: 100%;
   justify-content: space-evenly;
 }
 
+.left-container {
+  width: 100%;
+  margin-left: 2%;
+  margin-top: 2%;
+  display: flex;
+  flex-direction: column;
+}
+
 .account-container {
   display: flex;
-  width: 60%;
+  width: 90%;
+  margin-bottom: 5%;
   flex-direction: column;
-  /* border: 1px solid green; */
+  background: #439582;
+}
+
+.stocks-container {
+  display: flex;
+  width: 90%;
+  flex-direction: column;
 }
 
 .news-container {
-  padding-top: 5%;
+  padding-left: 10px;
   display: flex;
-  width: 30%;
+  margin-top: 3vh;
+  margin-bottom: 16vh;
+  margin-right: 2vw;
+  height: auto;
+  width: 40%;
   flex-direction: column;
-  /* border: 1px solid red; */
+  color: white;
+  background-color: #074948;
+  box-shadow: -4px 0 4px 0 rgba(53,53,53,0.50), 4px 4px 5px 0 rgba(38,37,37,0.50);
+}
+
+#account-balance {
+  color: white;
+  margin-left: 1.5vw;
+}
+
+#profit-display {
+  margin-left: 3vw;
+}
+
+.stocks-header {
+  display: inherit;
+}
+
+.price {
+  padding-bottom: 2vh;
+}
+
+#trade-button {
+  text-decoration: none;
+  color: #fff;
+  background-color: #07494800;
+  text-align: center;
+  letter-spacing: .5px;
+  -webkit-transition: background-color .2s ease-out;
+  transition: background-color .2s ease-out;
+  cursor: pointer;
+  border: 1px solid;
 }

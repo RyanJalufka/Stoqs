@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Box, InfiniteScroll } from "grommet";
+import "./styles/news.css";
 
 import _ from "lodash";
 
 class News extends Component {
   renderNewsList(array) {
        return (
-        <Box height="medium" overflow="auto" elevation="medium">
+        <Box height="medium" overflow="auto" elevation="medium" id="news-box">
           <InfiniteScroll items={array}>
             {item => (
               <Box
+                id="news-item"
                 flex={false}
                 pad="medium">
-                <b>{item.headline}</b>
-                <a href={item.url} target="_blank" style={{color: 'black'}}>- {item.source}</a>
-                <br />
+                <a href={item.url} target="_blank" style={{color: 'white'}}>{item.headline}</a>
+                <p style={{paddingLeft: "1%"}}> - {item.source}</p>
               </Box>
             )}
           </InfiniteScroll>
