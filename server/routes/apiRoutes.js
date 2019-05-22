@@ -10,6 +10,11 @@ router.post('/quote', apiController.quote);
 /*
  * POST
  */
+router.post('/quotechart', apiController.quotechart);
+
+/*
+ * POST
+ */
 router.post('/batch', apiController.batch);
 
 

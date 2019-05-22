@@ -94,7 +94,6 @@ class Dashboard extends Component {
       <div className="container">
         {this.props.auth.isAuthenticated ? (
           <div className="left-container">
-            <p style={{color: "white"}}>{this.props.account.name}</p>
             <div className="account-container">
               <h3>
                 <b id="account-balance">${fc(this.props.account.balance)}</b>

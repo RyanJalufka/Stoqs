@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Chart from '../Chart';
 // import { Link } from "react-router-dom";
 import { Button } from "react-materialize";
 import fc from 'format-currency';
@@ -7,6 +8,7 @@ import fc from 'format-currency';
 // import isEmpty from 'is-empty';
  import { buyNewStock } from "../../Actions/accountAction";
 import { setUserStocklist } from "../../Actions/authAction";
+import { ClipLoader } from 'react-spinners';
 import "../styles/stockpage.css"
 
 
@@ -70,23 +72,51 @@ class StockPage extends Component {
 
   render() {
 
+     if(this.props.currentStock.loading) {
+      return (
+      <div className="cliploader">
+        <ClipLoader
+          sizeUnit={"px"}
+          size={150}
+          color={'#36D7B7'}
+          loading={true}
+        /> 
+      </div>);
+    } else {
+
+      let chart = this.props.currentStock.chart;
+      
+          let dates = [];
+          let prices = [];
+          for(let i = 0; i < this.props.currentStock.chart.length; i++) {
+            dates.push(chart[i].label);
+            prices.push(chart[i].close);
+          }
+          console.log("prices: ", prices)
+
     return(
+
       <div>
-        <h3>{this.props.currentStock.companyName}</h3>
-        <h3>${fc(this.props.currentStock.latestPrice)}</h3>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <p>Shares Owned: {this.props.currentStock.shares}</p>
-            <p>Average Cost: ${fc(this.props.currentStock.cost / this.props.currentStock.shares)} per share</p>
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
-            <Button type="submit" value="Submit">Buy</Button>
-            <p>${fc(this.props.account.balance)} buying power</p>
-          </form>
+        <h3>{this.props.currentStock.quote.companyName}</h3>
+        <h4>${fc(this.props.currentStock.quote.latestPrice)}</h4>
+        <div className="chart-container">
+          <Chart 
+            dates={dates}
+            prices={prices} />
         </div>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <p>Shares Owned: {this.props.currentStock.shares}</p>
+          <p>Average Cost: ${fc(this.props.currentStock.cost / this.props.currentStock.shares)} per share</p>
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
+          <Button type="submit" value="Submit">Buy</Button>
+          <p>${fc(this.props.account.balance)} buying power</p>
+        </form>
+      </div>
       </div>
     );
   }
-}
+}}
 
 // symbol: currentStock.symbol
 // shares: user input
@@ -100,7 +130,8 @@ const mapStateToProps = state => {
     auth: state.auth,
     account: state.account,
     stockList: state.account.stockList,
-    currentStock: state.currentStock
+    currentStock: state.currentStock,
+    chart: state.currentStock.chart
   };
 };
 
